@@ -17,6 +17,21 @@ const run = async () => {
     try {
         await client.connect();
         console.log("Connected to MongoDB");
+
+        const db = client.db("todoApp");
+        const taskCollection = db.collection("task");
+
+        // API to Run Server 
+        app.get("/", async (req, res) => {
+            res.send("Server is Running");
+        });
+
+        // API to Get All Tasks
+        app.get("/tasks", async (req, res) => {
+            const tasks = await taskCollection.find({}).toArray();
+            res.send(tasks);
+        }
+        );
     }
     finally {
         // client.close()
