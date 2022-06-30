@@ -36,9 +36,18 @@ const run = async () => {
         //API to delete a task with id
         app.delete("/tasks/:id", async (req, res) => {
             const id = req.params.id;
-            console.log(id);
+            // console.log(id);
             await taskCollection.deleteOne({ _id: ObjectId(id) });
             res.send("Task Deleted");
+        }
+        );
+
+        //API to update a task with id
+        app.put("/tasks/:id", async (req, res) => {
+            const id = req.params.id;
+            const task = req.body;
+            const result = await taskCollection.updateOne({ _id: ObjectId(id) }, { $set: task });
+            res.send(result);
         }
         );
     }
