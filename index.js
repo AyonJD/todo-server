@@ -50,6 +50,16 @@ const run = async () => {
             res.send(result);
         }
         );
+
+        //API to add a task
+        app.post("/tasks", async (req, res) => {
+            const task = req.body;
+            const result = await taskCollection.insertOne(task);
+            res.send(result);
+        }
+        );
+
+
     }
     finally {
         // client.close()
